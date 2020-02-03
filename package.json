@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/urbanska-m/todo-app-backend/issues"
   },
-  "homepage": "https://github.com/urbanska-m/todo-app-backend#readme"
+  "homepage": "https://github.com/urbanska-m/todo-app-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "serverless-http": "^2.3.1"
+  }
 }

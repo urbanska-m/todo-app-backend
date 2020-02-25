@@ -57,16 +57,48 @@ app.post('/tasks', function (req, res) {
 
 // Updating tasks
 app.put('/tasks/:taskId', function (req, res) {
-  res.json({
-    message: 'Your PUT works',
-  });
+
+  // Identify task being updated
+  // const taskToEdit = req.params.taskId;
+  // const taskDescription = req.body;
+  // const completed = req.body;
+
+  // Execute SQL command to UPDATE
+  connection.query('UPDATE `tasks` SET `taskDescription` = ?, `completed` = ? WHERE `taskId` = ?', [req.body.taskDescription, req.body.completed, req.params.taskId], function (error, results, fields) {
+    if(error) {
+      console.error("Your query had a problem with updating the task", error);
+      res.status(500).json({errorMessage: error});
+    }
+    else {
+      // Return to client info about task that has been updated
+      res.json({
+        updatedTask: results,
+        message: "Your task was updated"
+      });
+    }
+  })
 });
 
 // Deleting tasks
 app.delete('/tasks/:taskId', function (req, res) {
-  res.json({
-    message: 'Your DELETE works',
-  });
+
+  // Identify task being deleted
+  const taskToDelete = req.params.taskId;
+
+  // Execute SQL command to DELETE
+  connection.query('DELETE FROM `tasks` WHERE `taskId` = ?', taskToDelete, function (error, results, fields) {
+    if(error) {
+      console.error("Your query had a problem with deleting the task", error);
+      res.status(500).json({errorMessage: error});
+    }
+    else {
+      // Return to client info about task that has been deleted
+      res.json({
+        deletedTask: results,
+        message: "Your task was deleted"
+      });
+    }
+  })
 });
 
 module.exports.tasks = serverless(app);

@@ -4,7 +4,7 @@ const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
 app.use(express.json());
-const uuidv4 = require('uuid/v4');
+// const uuidv4 = require('uuid/v4');
 const mysql = require('mysql');
 const cors = require('cors');
 app.use(cors());
@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
 // Retrieving tasks
 app.get('/tasks', function (req, res) {
   
-  connection.query('SELECT * FROM `tasks` WHERE `userId` = 2', function (error, results, fields) {
+  connection.query('SELECT * FROM `tasks`', function (error, results, fields) {
     // error will be an Error if one occurred during the query
     if(error) {
       console.error("Your query had a problem with fetching tasks", error);
@@ -38,7 +38,7 @@ app.post('/tasks', function (req, res) {
   // Accept info from client about what task is being created
 
   const taskToInsert = req.body;
-  taskToInsert.taskId = uuidv4();
+  // taskToInsert.taskId = uuidv4();
 
   // Take that info, pre-populate an SQL INSERT statement
   // Execute statement
